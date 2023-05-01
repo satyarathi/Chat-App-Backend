@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
+const gmailapi = require("../utils/gmail")
+
 
 const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
@@ -176,4 +178,17 @@ const removeFromGroup = asyncHandler(async (req, res) => {
   }
 });
 
-  module.exports = { accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup }
+const sendMailtoInbox = asyncHandler(async(req, res) =>{
+  console.log(req);
+  try {
+    console.log(req);
+     let chatID=req.params.chatId;
+     gmailapi.sendMail(chatID).then(res.status(200).send({mail:"SENT"}));
+   } catch (error) {
+      res.status(400);
+      throw new Error(error.message);
+   }
+})
+
+
+  module.exports = { accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup, sendMailtoInbox }

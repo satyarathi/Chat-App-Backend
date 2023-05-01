@@ -6,7 +6,8 @@ const {
     createGroupChat,
     renameGroup,
     addToGroup,
-    removeFromGroup
+    removeFromGroup,
+    sendMailtoInbox
   } = require("../controllers/chatController");
 
 const router = express.Router();
@@ -29,6 +30,8 @@ router.route("/").get(protect, fetchChats);
  //route to remove from  group
 router.route("/groupremove").put(protect, removeFromGroup);
 
+//route to send email
+router.route("/send-email/:chatId").post( sendMailtoInbox);
 
 
 module.exports = router;
