@@ -3,7 +3,7 @@ const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 const gmailapi = require("../utils/gmail")
 
-
+//creating or fetching one to one chat
 const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
   
@@ -51,6 +51,7 @@ const accessChat = asyncHandler(async (req, res) => {
     }
   });
 
+  //fetch chats for a particular user
   const fetchChats = asyncHandler(async(req,res)=>{
     try {
         Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
