@@ -3,7 +3,7 @@ const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 const gmailapi = require("../utils/gmail")
 
-
+//creating or fetching one to one chat
 const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
   
@@ -51,6 +51,7 @@ const accessChat = asyncHandler(async (req, res) => {
     }
   });
 
+  //fetch chats for a particular user
   const fetchChats = asyncHandler(async(req,res)=>{
     try {
         Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
@@ -179,11 +180,10 @@ const removeFromGroup = asyncHandler(async (req, res) => {
 });
 
 const sendMailtoInbox = asyncHandler(async(req, res) =>{
-  console.log(req);
   try {
-    console.log(req);
-     let chatID=req.params.chatId;
-     gmailapi.sendMail(chatID).then(res.status(200).send({mail:"SENT"}));
+    let splitArray=req.params.chatId.split(",");
+    console.log("split array",splitArray)
+    gmailapi.sendMail(splitArray[0],splitArray[1]).then(res.status(200).send({mail:"SENT"}));
    } catch (error) {
       res.status(400);
       throw new Error(error.message);
