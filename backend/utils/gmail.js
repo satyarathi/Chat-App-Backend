@@ -10,7 +10,7 @@ const Message = require('../models/messageModel');
 const CLIENT_ID = '39971611594-6jqeqohge5s03h0bglko5mj00g1d1bpq.apps.googleusercontent.com';
 const CLEINT_SECRET = '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';
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04ZvDFrAwn3P8CgYIARAAGAQSNwF-L9Ir9xKo-57RER4nd3iKqw3jiT_MIkemzBTX3DPSpK1EhuYjwBNotKJT35H7L14yBbKYWc4';
+const REFRESH_TOKEN = '1//04ztTOErf3r93CgYIARAAGAQSNwF-L9IrPOF2qEDQkr2eOGJxehxzBtnaRGzriiRKL40c7UUtJwF_itzUpY2_3D-g_YmmnaE2uwc';
 
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -20,7 +20,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail(chatID) {
+async function sendMail(chatID, recipient) {
     try {
         let chat;
         const accessToken = await oAuth2Client.getAccessToken();
@@ -39,7 +39,7 @@ async function sendMail(chatID) {
 
         const mailOptions = {
             from: 'Jitendra Satyarathi <jitendrasatyarathi@gmail.com>',
-            to: "gmail@gmail.com",
+            to:  recipient,
             subject: 'Chat conversation',
             text: 'Your chats',
             html: ``,
