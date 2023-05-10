@@ -76,48 +76,66 @@ function getMessages(jsonData) {
 }
   
 function jsonToChatHTML(jsonData) {
-    const dom = new JSDOM(`<!DOCTYPE html>`);
-    const document = dom.window.document;
-  
-    const chatContainer = document.createElement("div");
-    chatContainer.classList.add("chat-container");
-  
-    for (let i = 0; i < jsonData.length; i++) {
-      const message = jsonData[i].message;
-      const senderName = jsonData[i].senderName;
-      const createdAt = new Date(jsonData[i].createdAt).toLocaleTimeString();
-  
-      const chatMessage = document.createElement("div");
-      chatMessage.classList.add("chat-message");
-      if (senderName === "Jitendra") {
-        chatMessage.classList.add("chat-message-right");
-      } else {
-        chatMessage.classList.add("chat-message-left");
-      }
-  
-      const messageText = document.createElement("p");
-      messageText.textContent = message;
-  
-      const messageInfo = document.createElement("div");
-      messageInfo.classList.add("message-info");
-  
-      const senderNameText = document.createElement("span");
-      senderNameText.textContent = senderName;
-  
-      const createdAtText = document.createElement("span");
-      createdAtText.textContent = createdAt;
-  
-      messageInfo.appendChild(senderNameText);
-      messageInfo.appendChild(createdAtText);
-  
-      chatMessage.appendChild(messageText);
-      chatMessage.appendChild(messageInfo);
-  
-      chatContainer.appendChild(chatMessage);
+  const dom = new JSDOM(`<!DOCTYPE html>`);
+  const document = dom.window.document;
+
+  const chatContainer = document.createElement("table");
+  chatContainer.classList.add("chat-container");
+  chatContainer.style.borderCollapse = "collapse";
+
+  let lastSender = null;
+
+  for (let i = 0; i < jsonData.length; i++) {
+    const message = jsonData[i].message;
+    const senderName = jsonData[i].senderName;
+    const createdAt = new Date(jsonData[i].createdAt).toLocaleTimeString();
+
+    const chatMessage = document.createElement("tr");
+    chatMessage.style.borderBottom = "1px solid #ccc";
+
+    const messageText = document.createElement("td");
+    messageText.textContent = message;
+    messageText.style.padding = "10px";
+
+    const messageInfo = document.createElement("td");
+    messageInfo.style.textAlign = "right";
+    messageInfo.style.fontSize = "10px";
+    messageInfo.style.color = "#666";
+    messageInfo.style.padding = "10px";
+
+    const senderNameText = document.createElement("span");
+    senderNameText.textContent = senderName;
+
+    const createdAtText = document.createElement("span");
+    createdAtText.textContent = createdAt;
+
+    if (lastSender !== senderName) {
+      const senderRow = document.createElement("tr");
+      const senderCell = document.createElement("td");
+      senderCell.textContent = senderName;
+      senderCell.style.backgroundColor = "#eee";
+      senderCell.style.fontWeight = "bold";
+      senderCell.style.padding = "10px";
+      senderCell.setAttribute("colspan", "2");
+      senderRow.appendChild(senderCell);
+      chatContainer.appendChild(senderRow);
     }
-  
-    return chatContainer.outerHTML;
+
+    lastSender = senderName;
+
+    messageInfo.appendChild(senderNameText);
+    messageInfo.appendChild(document.createElement("br"));
+    messageInfo.appendChild(createdAtText);
+
+    chatMessage.appendChild(messageText);
+    chatMessage.appendChild(messageInfo);
+
+    chatContainer.appendChild(chatMessage);
   }
+
+  return chatContainer.outerHTML;
+}
+
 
 module.exports = {sendMail};
 //
