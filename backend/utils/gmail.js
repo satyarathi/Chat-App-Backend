@@ -7,10 +7,10 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const Message = require('../models/messageModel');
 
-const CLIENT_ID = '39971611594-6jqeqohge5s03h0bglko5mj00g1d1bpq.apps.googleusercontent.com';
-const CLEINT_SECRET = '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';
+const CLIENT_ID = '1065069312436-1vcvm9rm7b7jkr3le7frkbr8l0lnn9ld.apps.googleusercontent.com';
+const CLEINT_SECRET = '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';
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04ztTOErf3r93CgYIARAAGAQSNwF-L9IrPOF2qEDQkr2eOGJxehxzBtnaRGzriiRKL40c7UUtJwF_itzUpY2_3D-g_YmmnaE2uwc';
+const REFRESH_TOKEN = '1//04lt59AcwpcjjCgYIARAAGAQSNwF-L9Ir__AzsWQOzaDHpFx0QSmfWGZeoc-35l3NNC_bP5jtO1kKr1BNZle94sW0ko1m8GVBVEg';
 
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -29,7 +29,7 @@ async function sendMail(chatID, recipient) {
             service: 'gmail',
             auth: {
                 type: 'OAuth2',
-                user: 'jitendrasatyarathi@gmail.com',
+                user: 'patildhanshrees6112@gmail.com',
                 clientId: CLIENT_ID,
                 clientSecret: CLEINT_SECRET,
                 refreshToken: REFRESH_TOKEN,
@@ -38,7 +38,7 @@ async function sendMail(chatID, recipient) {
         });
 
         const mailOptions = {
-            from: 'Jitendra Satyarathi <jitendrasatyarathi@gmail.com>',
+            from: 'Dhanshree Patil <patildhanshrees6112@gmail.com>',
             to:  recipient,
             subject: 'Chat conversation',
             text: 'Your chats',
