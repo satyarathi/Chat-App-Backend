@@ -180,11 +180,10 @@ const removeFromGroup = asyncHandler(async (req, res) => {
 });
 
 const sendMailtoInbox = asyncHandler(async(req, res) =>{
-  console.log(req);
   try {
-    console.log(req);
-     let chatID=req.params.chatId;
-     gmailapi.sendMail(chatID).then(res.status(200).send({mail:"SENT"}));
+    let splitArray=req.params.chatId.split(",");
+    console.log("split array",splitArray)
+    gmailapi.sendMail(splitArray[0],splitArray[1]).then(res.status(200).send({mail:"SENT"}));
    } catch (error) {
       res.status(400);
       throw new Error(error.message);
