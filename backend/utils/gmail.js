@@ -65,7 +65,8 @@ function getMessages(jsonData) {
       const message = {};
       const data = jsonData[i];
   
-      message.message = data.content;
+      message.message = data.content || data.image;
+      
       message.senderName = data.sender.name;
       message.createdAt = new Date(data.createdAt);
   
