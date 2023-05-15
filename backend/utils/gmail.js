@@ -10,7 +10,7 @@ const Message = require('../models/messageModel');
 const CLIENT_ID = '1065069312436-1vcvm9rm7b7jkr3le7frkbr8l0lnn9ld.apps.googleusercontent.com';
 const CLEINT_SECRET = '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';
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04lt59AcwpcjjCgYIARAAGAQSNwF-L9Ir__AzsWQOzaDHpFx0QSmfWGZeoc-35l3NNC_bP5jtO1kKr1BNZle94sW0ko1m8GVBVEg';
+const REFRESH_TOKEN = '1//042r4S122AEHrCgYIARAAGAQSNwF-L9IrZLXxWRSaMpwLY3ptuRKt6-2EHvdMVOQwDaSXMcFmV1ueqWA-RyhAGlj1bSCXnJDBKyk';
 
 
 const oAuth2Client = new google.auth.OAuth2(
