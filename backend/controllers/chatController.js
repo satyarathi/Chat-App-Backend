@@ -2,13 +2,14 @@ const asyncHandler = require("express-async-handler");
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 const gmailapi = require("../utils/gmail")
+const logger = require("../config/logger");
 
 //creating or fetching one to one chat
 const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
   
     if (!userId) {
-      console.log("UserId param not sent with request");
+      logger.error('"UserId param not sent with request"')
       return res.sendStatus(400);
     }
   
@@ -43,9 +44,10 @@ const accessChat = asyncHandler(async (req, res) => {
           "-password"
         );
         res.status(200).json(FullChat);
-
+        logger.info("Chat Accessed successfully.")
       } catch (error) {
         res.status(400);
+        logger.error("Error in accessing Chat")
         throw new Error(error.message);
       }
     }
@@ -65,9 +67,11 @@ const accessChat = asyncHandler(async (req, res) => {
               select: "name pic email",
             });
             res.status(200).send(results);
+            logger.info("Chat Fetched Successfully.")
           });
       } catch (error) {
         res.status(400);
+        logger.error("Error in fetching Chat.")
         throw new Error(error.message);
       }
  })
@@ -100,8 +104,10 @@ const accessChat = asyncHandler(async (req, res) => {
           .populate("groupAdmin", "-password");
     
         res.status(200).json(fullGroupChat);
+        logger.info("Group Created Successfully.");
       } catch (error) {
         res.status(400);
+        logger.error("Error in Creating Group.");
         throw new Error(error.message);
       }
  })
@@ -123,9 +129,11 @@ const accessChat = asyncHandler(async (req, res) => {
 
   if (!updatedChat) {
     res.status(404);
+    logger.error("Chat Not Found With this Id");
     throw new Error("Chat Not Found");
   } else {
     res.json(updatedChat);
+    logger.info('Group Renamed Successfully.');
   }
 })
 
@@ -148,9 +156,11 @@ const addToGroup = asyncHandler(async (req, res) => {
 
   if (!added) {
     res.status(404);
+    logger.error("Chat Not Found With this Id")
     throw new Error("Chat Not Found");
   } else {
     res.json(added);
+    logger.info("User Added To Group");
   }
 });
 
@@ -173,9 +183,11 @@ const removeFromGroup = asyncHandler(async (req, res) => {
 
   if (!removed) {
     res.status(404);
+    logger.error("Chat Not Found With this Id")
     throw new Error("Chat Not Found");
   } else {
     res.json(removed);
+    logger.info('User Removed From Group');
   }
 });
 
@@ -183,7 +195,12 @@ const sendMailtoInbox = asyncHandler(async(req, res) =>{
   try {
     let splitArray=req.params.chatId.split(",");
     console.log("split array",splitArray)
-    gmailapi.sendMail(splitArray[0],splitArray[1]).then(res.status(200).send({mail:"SENT"}));
+    gmailapi.sendMail(splitArray[0],splitArray[1])
+    .then(
+      res.status(200)
+      .send({mail:"SENT"})
+      );
+      logger.info('Mail Sent Successfully');
    } catch (error) {
       res.status(400);
       throw new Error(error.message);

@@ -5,7 +5,6 @@ const userRoutes = require('./routes/userRoute');
 const { notFound,errorHandler } = require('./middleware/errorMiddleware');
 const chatRoutes = require("./routes/chatRoute");
 const messageRoutes = require('./routes/messageRoute');
-const path = require('path');
 const cors = require('cors') ;
 const logger = require('./config/logger'); 
 
