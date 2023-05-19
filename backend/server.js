@@ -7,6 +7,7 @@ const chatRoutes = require("./routes/chatRoute");
 const messageRoutes = require('./routes/messageRoute');
 const path = require('path');
 const cors = require('cors') ;
+const logger = require('./config/logger'); 
 
 dotenv.config();
 connectDB();
@@ -36,7 +37,8 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 
-const server = app.listen(5000,console.log(`Server Started on port ${PORT}`));
+const server = app.listen(5000,()=>{
+    logger.info(`Server Started on port ${PORT}`)});
 
 const io = require('socket.io')(server, {
     pingTimeout: 60000,
